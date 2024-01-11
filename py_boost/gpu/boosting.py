@@ -179,7 +179,7 @@ class GradientBoosting(Ensemble):
             EvalHistory(self.history, verbose=self.params['verbose']),
             EarlyStopping(self.params['es']),
         )
-
+        print(self.history)
     def _fit(self, builder, build_info):
         """Fit with tree builder and build info
 
