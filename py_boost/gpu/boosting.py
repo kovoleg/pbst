@@ -192,9 +192,8 @@ class GradientBoosting(Ensemble):
         """
         train, valid = build_info['data']['train'], build_info['data']['valid']
         self.callbacks.before_train(build_info)
-
+        
         for i in range(self.ntrees):
-
             build_info['num_iter'] = i
             train['grad'], train['hess'] = self.loss(train['target'], train['ensemble'])
 
@@ -232,10 +231,10 @@ class GradientBoosting(Ensemble):
                 tree.reformat(nfeats=self.nfeats, debug=self.params['debug'])
                 break
             tree.reformat(nfeats=self.nfeats, debug=self.params['debug'])
-
+            print(self.history)
         self.callbacks.after_train(build_info)
         self.base_score = self.base_score.get()
-
+        
     def fit(self, X, y, sample_weight=None, eval_sets=None):
         """Fit model
 
