@@ -251,7 +251,7 @@ class GradientBoosting(Ensemble):
 
         X, y, sample_weight, eval_sets = validate_input(X, y, sample_weight, eval_sets)
         print(eval_sets)
-        print(eval_sets.shape)
+        print(len(eval_sets))
         # fit and free memory
         mempool = cp.cuda.MemoryPool()
         with cp.cuda.using_allocator(allocator=mempool.malloc):
