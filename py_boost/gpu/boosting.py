@@ -231,7 +231,7 @@ class GradientBoosting(Ensemble):
                 tree.reformat(nfeats=self.nfeats, debug=self.params['debug'])
                 break
             tree.reformat(nfeats=self.nfeats, debug=self.params['debug'])
-            print(self.history)
+            # print(self.history)
         self.callbacks.after_train(build_info)
         self.base_score = self.base_score.get()
         
