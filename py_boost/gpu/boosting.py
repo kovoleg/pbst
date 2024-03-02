@@ -196,7 +196,7 @@ class GradientBoosting(Ensemble):
         for i in range(self.ntrees):
             build_info['num_iter'] = i
             train['grad'], train['hess'] = self.loss(train['target'], train['ensemble'])
-
+            print(type(train['hess']))
             self.callbacks.before_iteration(build_info)
 
             tree, leaves, preds, val_leaves, val_preds = \
