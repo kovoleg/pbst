@@ -6,7 +6,7 @@ except Exception:
     pass
 from .base import Ensemble
 from .losses import loss_alias
-from .tree import DepthwiseTreeBuilder
+from .tree import DepthwiseTreeBuilder # This class builds decision tree with given parameters
 from .utils import pad_and_move, validate_input
 from ..callbacks.callback import EarlyStopping, EvalHistory, CallbackPipeline
 from ..multioutput.sketching import GradSketch
@@ -196,7 +196,7 @@ class GradientBoosting(Ensemble):
         for i in range(self.ntrees):
             build_info['num_iter'] = i
             train['grad'], train['hess'] = self.loss(train['target'], train['ensemble'])
-            print(type(train['hess']))
+            # print(type(train['hess']))
             self.callbacks.before_iteration(build_info)
 
             tree, leaves, preds, val_leaves, val_preds = \
