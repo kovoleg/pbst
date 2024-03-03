@@ -48,32 +48,8 @@ class SingleSplitter(Callback):
         self.__init__()
 
 class WiseGroupsSplitter(SingleSplitter): 
-
-    def __init__(self, ngroups=2): # на сколько групп разделить
-        super().__init__() # создаем сингл спилттер
-        
-        self.ngroups = ngroups # присваиваем объекту на сколько групп делить
-        self._ngroups = None
-
-    def before_iteration(self, build_info):
-        """Update groups count with the actual target shape if needed
-
-        Args:
-            build_info: dict
-
-        Returns:
-
-        """
-        super().before_iteration(build_info)
-        if build_info['num_iter'] == 0:
-            self._ngroups = min(self.ngroups, build_info['data']['train']['grad'].shape[1])
-
     def __call__(self):
-        """
-
-        Returns:
-            list of cp.ndarrays of indexers
-        """
+        
         cp.random.shuffle(self.indexer)
         return cp.array_split(self.indexer, self._ngroups)
         
