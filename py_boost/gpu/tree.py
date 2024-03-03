@@ -9,7 +9,7 @@ import numpy as np
 from .utils import apply_values, depthwise_grow_tree, get_tree_node, set_leaf_values, calc_node_values
 from .utils import tree_prediction_leaves_typed_kernels, tree_prediction_leaves_typed_kernels_f
 from .utils import tree_prediction_values_kernel
-
+from sklearn.cluster import DBSCAN
 
 class Tree:
     """This class initializes an empty tree structure, implements methods to set tree values and single tree inference.
@@ -513,8 +513,27 @@ class DepthwiseTreeBuilder:
 
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
-        else:
-            output_groups = self.target_grouper()
+        else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
+            # output_groups = self.target_grouper()
+            def k_means_cupy(X, n_clusters, n_iter=100):
+    # случайное инициализация центроидов
+    idx = cp.random.choice(X.shape[0], n_clusters, replace=False)
+    centroids = X[idx]
+
+    for _ in range(n_iter):
+        # вычисление расстояний между точками и центроидами
+        distances = cp.linalg.norm(X[:, cp.newaxis] - centroids, axis=2)
+        
+        # вычисление ближайшего центроида для каждой точки
+        labels = cp.argmin(distances, axis=1)
+        
+        # обновление центроидов как среднее значение точек в каждом кластере
+        for i in range(n_clusters):
+            centroids[i] = cp.mean(X[labels == i], axis=0)
+    
+    return labels, centroids
+    
+            output_groups = 
 
         if sample_weight is not None:
             grad = grad * sample_weight
