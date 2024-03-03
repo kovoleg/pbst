@@ -6,7 +6,7 @@ except Exception:
     pass
 
 from ..callbacks.callback import Callback
-
+from sklearn.cluster import DBSCAN
 
 class SingleSplitter(Callback):
     """Basic splitter, means no split. Single tree will be built at each boosting step"""
@@ -34,7 +34,7 @@ class SingleSplitter(Callback):
         Returns:
             list of cp.ndarrays of indexers
         """
-        return [self.indexer]
+        return [self.indexer] # чтобы всегда могли поулчить индексы для каждой группы
 
     def after_train(self, build_info):
         """Clean state not to keep the indexer in trained model
@@ -47,20 +47,49 @@ class SingleSplitter(Callback):
         """
         self.__init__()
 
+class WiseGroupsSplitter(SingleSplitter): 
 
-class RandomGroupsSplitter(SingleSplitter):
+    def __init__(self, ngroups=2): # на сколько групп разделить
+        super().__init__() # создаем сингл спилттер
+        
+        self.ngroups = ngroups # присваиваем объекту на сколько групп делить
+        self._ngroups = None
+
+    def before_iteration(self, build_info):
+        """Update groups count with the actual target shape if needed
+
+        Args:
+            build_info: dict
+
+        Returns:
+
+        """
+        super().before_iteration(build_info)
+        if build_info['num_iter'] == 0:
+            self._ngroups = min(self.ngroups, build_info['data']['train']['grad'].shape[1])
+
+    def __call__(self):
+        """
+
+        Returns:
+            list of cp.ndarrays of indexers
+        """
+        cp.random.shuffle(self.indexer)
+        return cp.array_split(self.indexer, self._ngroups)
+        
+class RandomGroupsSplitter(SingleSplitter): 
     """Random Groups Splitter, means all outputs will be randomly grouped at each iteration.
     Single tree will be created for each group.
     """
 
-    def __init__(self, ngroups=2):
+    def __init__(self, ngroups=2): # на сколько групп разделить
         """
 
         Args:
             ngroups: int, maximum number of groups to split outputs
         """
-        super().__init__()
-        self.ngroups = ngroups
+        super().__init__() # создаем сингл спилттер
+        self.ngroups = ngroups # присваиваем объекту на солько групп делить
         self._ngroups = None
 
     def before_iteration(self, build_info):
