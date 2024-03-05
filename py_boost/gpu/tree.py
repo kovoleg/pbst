@@ -520,15 +520,21 @@ class DepthwiseTreeBuilder:
             # output_groups = self.target_grouper()
             print('GRAD = ', grad)
             print(cp.shape(grad))
-            groups = DBSCAN(eps=40, min_samples=2).fit(cp.transpose(grad).get()).labels_
+            # groups = DBSCAN(eps=0.1, min_samples=2).fit(cp.transpose(grad).get()).labels_
+
+            groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
+
+
+
+            
             tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=7).fit_transform(cp.transpose(grad).get())
             print('TSNE = ', tsn_emb)
             print(np.shape(tsn_emb))
-            plt.scatter(tsn_emb[:, 0], tsn_emb[:, 1])
-            plt.show()
             
             # print(groups)
             # print(pairwise_distances(cp.transpose(grad).get()))
+
+            
             output_groups = []
             for i in range(len(np.unique(groups))):
               output_groups.append([])
@@ -537,8 +543,14 @@ class DepthwiseTreeBuilder:
             for i in groups:
               output_groups[i].append(j) 
               j += 1
+            print(output_groups)
+            plt.scatter(tsn_emb[output_groups[0], 0], tsn_emb[output_groups[0], 1], c='blue')
+            plt.scatter(tsn_emb[output_groups[1], 0], tsn_emb[output_groups[1], 1], c='red')
+            plt.show()
+            
             output_groups = self.target_grouper()    
             print(output_groups)
+            
         if sample_weight is not None:
             grad = grad * sample_weight
             hess = hess * sample_weight
