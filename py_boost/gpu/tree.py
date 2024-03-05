@@ -541,9 +541,11 @@ class DepthwiseTreeBuilder:
             for i in groups:
               output_groups[i].append(j) 
               j += 1
+                
             print(output_groups)
-            plt.scatter(tsn_emb[output_groups[0], 0], tsn_emb[output_groups[0], 1], c='blue')
-            plt.scatter(tsn_emb[output_groups[1], 0], tsn_emb[output_groups[1], 1], c='red')
+            color = ['blue', 'red', 'green', 'black']
+            for i in range(len(output_groups)):
+                plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
             plt.show()
             
             output_groups = self.target_grouper()    
