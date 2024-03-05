@@ -10,7 +10,7 @@ from .utils import apply_values, depthwise_grow_tree, get_tree_node, set_leaf_va
 from .utils import tree_prediction_leaves_typed_kernels, tree_prediction_leaves_typed_kernels_f
 from .utils import tree_prediction_values_kernel
 from sklearn.cluster import DBSCAN
-
+from sklearn.metrics import pairwise_distances
 class Tree:
     """This class initializes an empty tree structure, implements methods to set tree values and single tree inference.
     The instance of this object represents the actual boosting step, but not the single tree!
@@ -474,7 +474,7 @@ class DepthwiseTreeBuilder:
             'max_bin': 256,
             'max_depth': 6,
             'min_data_in_leaf': 10,
-            'min_gain_to_split': 0
+            'min_gain_to_split': 0,
         }, **tree_params}
 
         self.colsampler = colsampler
@@ -516,7 +516,7 @@ class DepthwiseTreeBuilder:
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
             groups = DBSCAN(eps=3, min_samples=2).fit(cp.transpose(grad).get()).labels_
-            
+            print(pairwise_distances(cp.transpose(grad).get()))
             output_groups = []
             for i in range(len(np.unique(groups))):
               output_groups.append([])
@@ -525,6 +525,7 @@ class DepthwiseTreeBuilder:
             for i in groups:
               output_groups[i].append(j) 
               j += 1
+                
             print(output_groups)
         if sample_weight is not None:
             grad = grad * sample_weight
