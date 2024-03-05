@@ -520,13 +520,11 @@ class DepthwiseTreeBuilder:
             # output_groups = self.target_grouper()
             print('GRAD = ', grad)
             print(cp.shape(grad))
-            # groups = DBSCAN(eps=0.1, min_samples=2).fit(cp.transpose(grad).get()).labels_
+            groups = DBSCAN(eps=40, min_samples=2).fit(cp.transpose(grad).get()).labels_
 
-            groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
+            # groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
 
 
-
-            
             tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=7).fit_transform(cp.transpose(grad).get())
             print('TSNE = ', tsn_emb)
             print(np.shape(tsn_emb))
