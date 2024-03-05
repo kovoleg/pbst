@@ -525,7 +525,7 @@ class DepthwiseTreeBuilder:
             for i in groups:
               output_groups[i].append(j) 
               j += 1
-
+            print(output_groups)
         if sample_weight is not None:
             grad = grad * sample_weight
             hess = hess * sample_weight
