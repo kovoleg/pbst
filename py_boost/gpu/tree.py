@@ -12,7 +12,6 @@ from .utils import tree_prediction_values_kernel
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import pairwise_distances
 from sklearn.manifold import TSNE 
-from seaborn import scatterplot
 import matplotlib.pyplot as plt
 
 class Tree:
@@ -521,16 +520,16 @@ class DepthwiseTreeBuilder:
             # output_groups = self.target_grouper()
             print('GRAD = ', grad)
             print(cp.shape(grad))
-            
+            plt.scatter(x, y)
             groups = DBSCAN(eps=40, min_samples=2).fit(cp.transpose(grad).get()).labels_
-            tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(grad).get())
+            tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=7).fit_transform(cp.transpose(grad).get())
             print('TSNE = ', tsn_emb)
             print(np.shape(tsn_emb))
-            scatterplot(data = tsn_emb)
+            plt.scatter(tsn_emb[:, 0], tsn_emb[:, 1])
             plt.show()
             
-            print(groups)
-            print(pairwise_distances(cp.transpose(grad).get()))
+            # print(groups)
+            # print(pairwise_distances(cp.transpose(grad).get()))
             output_groups = []
             for i in range(len(np.unique(groups))):
               output_groups.append([])
@@ -539,8 +538,8 @@ class DepthwiseTreeBuilder:
             for i in groups:
               output_groups[i].append(j) 
               j += 1
-                
-            print(output_groups)
+            output_groups = self.target_grouper()    
+            # print(output_groups)
         if sample_weight is not None:
             grad = grad * sample_weight
             hess = hess * sample_weight
