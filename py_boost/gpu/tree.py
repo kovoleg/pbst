@@ -522,7 +522,7 @@ class DepthwiseTreeBuilder:
             grad = hess
             # print('GRAD = ', grad)
             # print(cp.shape(grad))
-            groups = DBSCAN(eps=40, min_samples=2).fit(cp.transpose(grad).get()).labels_
+            groups = DBSCAN(eps=1, min_samples=2).fit(cp.transpose(grad).get()).labels_
 
             # groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
 
