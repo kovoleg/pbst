@@ -515,7 +515,7 @@ class DepthwiseTreeBuilder:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
-            groups = DBSCAN(eps=3, min_samples=2).fit(cp.transpose(grad).get())
+            groups = DBSCAN(eps=3, min_samples=2).fit(cp.transpose(grad).get()).labels_
             
             output_groups = []
             for i in range(len(np.unique(groups))):
