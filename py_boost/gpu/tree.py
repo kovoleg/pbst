@@ -11,6 +11,8 @@ from .utils import tree_prediction_leaves_typed_kernels, tree_prediction_leaves_
 from .utils import tree_prediction_values_kernel
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import pairwise_distances
+from sklearn.manifold import TSNE 
+from seaborn import scatterplot
 class Tree:
     """This class initializes an empty tree structure, implements methods to set tree values and single tree inference.
     The instance of this object represents the actual boosting step, but not the single tree!
@@ -516,6 +518,9 @@ class DepthwiseTreeBuilder:
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
             groups = DBSCAN(eps=40, min_samples=2).fit(cp.transpose(grad).get()).labels_
+            tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(grad).get()))
+            print(scatterplot(data = tsn_emb))
+            print(cp.shape(grad))
             print(groups)
             print(pairwise_distances(cp.transpose(grad).get()))
             output_groups = []
