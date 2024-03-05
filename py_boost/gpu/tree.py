@@ -13,6 +13,8 @@ from sklearn.cluster import DBSCAN
 from sklearn.metrics import pairwise_distances
 from sklearn.manifold import TSNE 
 from seaborn import scatterplot
+import matplotlib.pyplot as plt
+
 class Tree:
     """This class initializes an empty tree structure, implements methods to set tree values and single tree inference.
     The instance of this object represents the actual boosting step, but not the single tree!
@@ -517,10 +519,16 @@ class DepthwiseTreeBuilder:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
+            print('GRAD = ', grad)
+            print(cp.shape(grad))
+            
             groups = DBSCAN(eps=40, min_samples=2).fit(cp.transpose(grad).get()).labels_
             tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(grad).get())
-            print(scatterplot(data = tsn_emb))
-            print(cp.shape(grad))
+            print('TSNE = ', tsn_emb)
+            print(np.shape(tsn_emb))
+            scatterplot(data = tsn_emb)
+            plt.show()
+            
             print(groups)
             print(pairwise_distances(cp.transpose(grad).get()))
             output_groups = []
