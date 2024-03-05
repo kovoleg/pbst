@@ -520,7 +520,6 @@ class DepthwiseTreeBuilder:
             # output_groups = self.target_grouper()
             print('GRAD = ', grad)
             print(cp.shape(grad))
-            plt.scatter(x, y)
             groups = DBSCAN(eps=40, min_samples=2).fit(cp.transpose(grad).get()).labels_
             tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=7).fit_transform(cp.transpose(grad).get())
             print('TSNE = ', tsn_emb)
@@ -539,7 +538,7 @@ class DepthwiseTreeBuilder:
               output_groups[i].append(j) 
               j += 1
             output_groups = self.target_grouper()    
-            # print(output_groups)
+            print(output_groups)
         if sample_weight is not None:
             grad = grad * sample_weight
             hess = hess * sample_weight
