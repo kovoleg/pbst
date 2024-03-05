@@ -525,7 +525,7 @@ class DepthwiseTreeBuilder:
             # groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
 
 
-            tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=7).fit_transform(cp.transpose(grad).get())
+            tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(grad).get())
             print('TSNE = ', tsn_emb)
             print(np.shape(tsn_emb))
             
