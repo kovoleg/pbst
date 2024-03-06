@@ -514,9 +514,8 @@ class DepthwiseTreeBuilder:
         else:
             row_indexer = self.subsampler()
 
-        if self.target_grouper is not None:
-            # output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
-            output_groups = self.target_grouper()  
+        if self.target_grouper is None:
+            output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
             t = grad
