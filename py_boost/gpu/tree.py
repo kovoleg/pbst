@@ -515,14 +515,15 @@ class DepthwiseTreeBuilder:
             row_indexer = self.subsampler()
 
         if self.target_grouper is None:
-            output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
+            # output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
+            output_groups = self.target_grouper()  
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
             t = grad
             grad = hess
             # print('GRAD = ', grad)
             # print(cp.shape(grad))
-            groups = DBSCAN(eps=1, min_samples=2).fit(cp.transpose(grad).get()).labels_
+            # groups = DBSCAN(eps=1, min_samples=2).fit(cp.transpose(grad).get()).labels_
 
             # groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
 
@@ -531,8 +532,9 @@ class DepthwiseTreeBuilder:
             # print('TSNE = ', tsn_emb)
             # print(np.shape(tsn_emb))
             
+            groups = DBSCAN(eps=3, min_samples=2).fit(cp.transpose(tsn_emb).get()).labels_
             # print(groups)
-            print(pairwise_distances(cp.transpose(grad).get()))
+            # print(pairwise_distances(cp.transpose(grad).get()))
 
             
             output_groups = []
@@ -550,8 +552,8 @@ class DepthwiseTreeBuilder:
                 plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
             plt.show()
             
-            output_groups = self.target_grouper()    
-            print(output_groups)
+            # output_groups = self.target_grouper()    
+            # print(output_groups)
             grad = t
             
         if sample_weight is not None:
