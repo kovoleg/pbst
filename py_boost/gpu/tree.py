@@ -13,7 +13,7 @@ from sklearn.cluster import DBSCAN, KMeans
 from sklearn.metrics import pairwise_distances
 from sklearn.manifold import TSNE 
 import matplotlib.pyplot as plt
-
+import numpy as np
 class Tree:
     """This class initializes an empty tree structure, implements methods to set tree values and single tree inference.
     The instance of this object represents the actual boosting step, but not the single tree!
@@ -546,7 +546,7 @@ class DepthwiseTreeBuilder:
               j += 1
                 
             print(output_groups)
-            color = ['blue', 'red', 'green', 'black']
+            color = np.random.rand(len(output_groups) + 1, 3)
             for i in range(len(output_groups)):
                 plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
             plt.show()
