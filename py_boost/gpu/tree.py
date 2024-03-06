@@ -514,7 +514,7 @@ class DepthwiseTreeBuilder:
         else:
             row_indexer = self.subsampler()
 
-        if self.target_grouper is None:
+        if self.target_grouper is not None:
             # output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
             output_groups = self.target_grouper()  
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -532,7 +532,7 @@ class DepthwiseTreeBuilder:
             # print('TSNE = ', tsn_emb)
             # print(np.shape(tsn_emb))
             
-            groups = DBSCAN(eps=3, min_samples=2).fit(cp.transpose(tsn_emb).get()).labels_
+            groups = DBSCAN(eps=3, min_samples=2).fit(tsn_emb).labels_
             # print(groups)
             # print(pairwise_distances(cp.transpose(grad).get()))
 
