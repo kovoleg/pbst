@@ -147,8 +147,9 @@ class GradientBoosting(Ensemble):
             splitter = RandomGroupsSplitter(6)
         elif self.params['target_splitter'] == 'Random10':
             splitter = RandomGroupsSplitter(10)
-        else:
-            splitter = self.params['target_splitter']
+        print(self.params['target_splitter'])
+        # else:
+        #     splitter = self.params['target_splitter']
 
         self.target_splitter = splitter
 
