@@ -33,7 +33,9 @@ class GradientBoosting(Ensemble):
                  multioutput_sketch=None,
                  use_hess=True,
                  use_wise=True,
-
+                 hess_mode=True,
+                 dim_red=True,
+                 grouper_type=1,
                  
                  quantization='Quantile',
                  quant_sample=2000000,
@@ -106,6 +108,9 @@ class GradientBoosting(Ensemble):
             'multioutput_sketch': multioutput_sketch,
             'use_hess': use_hess,
             'use_wise': use_wise,
+            'hess_mode': hess_mode,
+            'dim_red': dim_red,
+            'grouper_type': grouper_type,
 
             'quantization': quantization,
             'quant_sample': quant_sample,
@@ -132,7 +137,10 @@ class GradientBoosting(Ensemble):
         self.min_data_in_leaf = self.params['min_data_in_leaf']
         self.use_hess = self.params['use_hess']
         self.use_wise = self.params['use_wise']
-
+        self.hess_mode=self.params['hess_mode']
+        self.dim_red = self.params['dim_red']
+        self.grouper_type = self.params['grouper_type']
+        
         self.colsample = self.params['colsample']
         if type(self.params['colsample']) in [float, int]:
             self.colsample = BaseSampler(self.params['colsample'], axis=1)
@@ -305,6 +313,9 @@ class GradientBoosting(Ensemble):
         builder = DepthwiseTreeBuilder(borders,
                                        use_hess=self.use_hess,
                                        use_wise=self.use_wise,
+                                       hess_mode=self.hess_mode,
+                                       dim_red=self.dim_red,
+                                       grouper_type=self.grouper_type,
                                        colsampler=self.colsample,
                                        subsampler=self.subsample,
                                        target_splitter=self.target_splitter,
