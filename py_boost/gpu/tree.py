@@ -528,7 +528,7 @@ class DepthwiseTreeBuilder:
             
         elif self.use_wise == True: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             
-            if use_hess == True:
+            if hess_mode == True:
                 mtx = hess
             else:
                 mtx = grad
