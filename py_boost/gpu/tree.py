@@ -451,6 +451,7 @@ class DepthwiseTreeBuilder:
 
     def __init__(self, borders,
                  use_hess=True,
+                 use_wise=True,
                  colsampler=None,
                  subsampler=None,
                  target_splitter=None,
@@ -470,6 +471,7 @@ class DepthwiseTreeBuilder:
         """
         self.borders = borders
         self.use_hess = use_hess
+        self.use_wise = use_wise           
         self.params = {**{
 
             'lr': 1.,
@@ -516,7 +518,7 @@ class DepthwiseTreeBuilder:
 
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
-        elif self.target_grouper == 'Wise': # ---------------------------------------------------------------------------------------------------------------------------------------------------
+        elif self.use_wise == True: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
             t = grad
             grad = hess
