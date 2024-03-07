@@ -516,7 +516,7 @@ class DepthwiseTreeBuilder:
 
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
-        else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
+        elif self.target_grouper == 'Wise': # ---------------------------------------------------------------------------------------------------------------------------------------------------
             # output_groups = self.target_grouper()
             t = grad
             grad = hess
@@ -555,6 +555,8 @@ class DepthwiseTreeBuilder:
             # output_groups = self.target_grouper()    
             # print(output_groups)
             grad = t
+        else:
+            output_groups = self.target_grouper()
             
         if sample_weight is not None:
             grad = grad * sample_weight
