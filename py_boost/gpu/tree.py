@@ -517,43 +517,44 @@ class DepthwiseTreeBuilder:
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
         else: # ---------------------------------------------------------------------------------------------------------------------------------------------------
-            output_groups = self.target_grouper()
-            # t = grad
-            # grad = hess
-            # # print('GRAD = ', grad)
-            # # print(cp.shape(grad))
-            # # groups = DBSCAN(eps=1, min_samples=2).fit(cp.transpose(grad).get()).labels_
-
-            # # groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
-
-
-            # tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(grad).get())
-            # # print('TSNE = ', tsn_emb)
-            # # print(np.shape(tsn_emb))
+            # output_groups = self.target_grouper()
+            t = grad
+            grad = hess
             
-            # groups = DBSCAN(eps=3, min_samples=2).fit(tsn_emb).labels_
-            # # print(groups)
-            # # print(pairwise_distances(cp.transpose(grad).get()))
+            # print('GRAD = ', grad)
+            # print(cp.shape(grad))
+            # groups = DBSCAN(eps=1, min_samples=2).fit(cp.transpose(grad).get()).labels_
+
+            # groups = KMeans(n_clusters=2, random_state=0, n_init="auto").fit(cp.transpose(grad).get()).labels_
+
+
+            tsn_emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(grad).get())
+            # print('TSNE = ', tsn_emb)
+            # print(np.shape(tsn_emb))
+            
+            groups = DBSCAN(eps=6, min_samples=2).fit(tsn_emb).labels_
+            # print(groups)
+            # print(pairwise_distances(cp.transpose(grad).get()))
 
             
-            # output_groups = []
-            # for i in range(len(np.unique(groups))):
-            #   output_groups.append([])
+            output_groups = []
+            for i in range(len(np.unique(groups))):
+              output_groups.append([])
             
-            # j = 0
-            # for i in groups:
-            #   output_groups[i].append(j) 
-            #   j += 1
+            j = 0
+            for i in groups:
+              output_groups[i].append(j) 
+              j += 1
                 
-            # print(output_groups)
-            # color = np.random.rand(len(output_groups) + 1, 3)
-            # for i in range(len(output_groups)):
-            #     plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
-            # plt.show()
+            print(output_groups)
+            color = np.random.rand(len(output_groups) + 1, 3)
+            for i in range(len(output_groups)):
+                plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
+            plt.show()
             
-            # # output_groups = self.target_grouper()    
-            # # print(output_groups)
-            # grad = t
+            # output_groups = self.target_grouper()    
+            # print(output_groups)
+            grad = t
             
         if sample_weight is not None:
             grad = grad * sample_weight
