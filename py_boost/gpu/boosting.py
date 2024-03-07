@@ -141,16 +141,10 @@ class GradientBoosting(Ensemble):
             splitter = SingleSplitter()
         elif self.params['target_splitter'] == 'OneVsAll':
             splitter = OneVsAllSplitter()
-        elif self.params['target_splitter'] == 'Random3':
-            splitter = RandomGroupsSplitter(3)
-        elif self.params['target_splitter'] == 'Random6':
-            splitter = RandomGroupsSplitter(6)
-        elif self.params['target_splitter'] == 'Random10':
-            splitter = RandomGroupsSplitter(10)
+        else:
+            splitter = self.params['target_splitter']
         print(self.params['target_splitter'])
-        # else:
-        #     splitter = self.params['target_splitter']
-
+        print(splitter)
         self.target_splitter = splitter
 
         self.multioutput_sketch = self.params['multioutput_sketch']
