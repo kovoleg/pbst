@@ -32,7 +32,9 @@ class GradientBoosting(Ensemble):
                  target_splitter='Single',
                  multioutput_sketch=None,
                  use_hess=True,
+                 use_wise=True
 
+                 
                  quantization='Quantile',
                  quant_sample=2000000,
                  max_bin=256,
@@ -103,6 +105,7 @@ class GradientBoosting(Ensemble):
             'target_splitter': target_splitter,
             'multioutput_sketch': multioutput_sketch,
             'use_hess': use_hess,
+            'use_wise': use_wise,
 
             'quantization': quantization,
             'quant_sample': quant_sample,
@@ -128,6 +131,7 @@ class GradientBoosting(Ensemble):
         self.max_depth = self.params['max_depth']
         self.min_data_in_leaf = self.params['min_data_in_leaf']
         self.use_hess = self.params['use_hess']
+        self.use_wise = self.params['use_wise']
 
         self.colsample = self.params['colsample']
         if type(self.params['colsample']) in [float, int]:
@@ -141,12 +145,6 @@ class GradientBoosting(Ensemble):
             splitter = SingleSplitter()
         elif self.params['target_splitter'] == 'OneVsAll':
             splitter = OneVsAllSplitter()
-        elif self.params['target_splitter'] == 'Random3':
-            splitter = RandomGroupsSplitter(3)
-        elif self.params['target_splitter'] == 'Random6':
-            splitter = RandomGroupsSplitter(6)    
-        elif self.params['target_splitter'] == 'Random10':
-            splitter = RandomGroupsSplitter(10)    
         else:
             splitter = self.params['target_splitter']
             
@@ -306,6 +304,7 @@ class GradientBoosting(Ensemble):
 
         builder = DepthwiseTreeBuilder(borders,
                                        use_hess=self.use_hess,
+                                       use_wise=self.use_wise,
                                        colsampler=self.colsample,
                                        subsampler=self.subsample,
                                        target_splitter=self.target_splitter,
