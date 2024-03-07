@@ -452,6 +452,10 @@ class DepthwiseTreeBuilder:
     def __init__(self, borders,
                  use_hess=True,
                  use_wise=True,
+                 hess_mode=True,
+                 dim_red=True,
+                 grouper_type=1,
+                 
                  colsampler=None,
                  subsampler=None,
                  target_splitter=None,
@@ -472,9 +476,9 @@ class DepthwiseTreeBuilder:
         self.borders = borders
         self.use_hess = use_hess
         self.use_wise = use_wise
-        self.hess_mode = hess_mode,
-        self.dim_red = dim_red,
-        self.grouper_type = grouper_type,
+        self.hess_mode = hess_mode
+        self.dim_red = dim_red
+        self.grouper_type = grouper_type
         self.params = {**{
 
             'lr': 1.,
