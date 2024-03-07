@@ -528,19 +528,19 @@ class DepthwiseTreeBuilder:
             
         elif self.use_wise == True: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             
-            if hess_mode == True:
+            if self.hess_mode == True:
                 mtx = hess
             else:
                 mtx = grad
 
-            if dim_red == True:
+            if self.dim_red == True:
                 emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
             else:
                 emb = cp.transpose(mtx).get()
 
-            if grouper_type == 1:
+            if self.grouper_type == 1:
                 groups = KMeans(n_clusters=5, random_state=0, n_init="auto").fit(emb).labels_
-            elif grouper_type == 2:
+            elif self.grouper_type == 2:
                 groups = DBSCAN(eps=6, min_samples=5).fit(emb).labels_
             
             # print('GRAD = ', grad)
