@@ -534,7 +534,7 @@ class DepthwiseTreeBuilder:
             # print('TSNE = ', tsn_emb)
             # print(np.shape(tsn_emb))
             
-            groups = DBSCAN(eps=6, min_samples=2).fit(tsn_emb).labels_
+            groups = DBSCAN(eps=6, min_samples=5).fit(tsn_emb).labels_
             # print(groups)
             # print(pairwise_distances(cp.transpose(grad).get()))
 
