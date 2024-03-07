@@ -11,7 +11,7 @@ from .utils import pad_and_move, validate_input
 from ..callbacks.callback import EarlyStopping, EvalHistory, CallbackPipeline
 from ..multioutput.sketching import GradSketch
 from ..sampling.bagging import BaseSampler
-from ..multioutput.target_splitter import SingleSplitter, OneVsAllSplitter
+from ..multioutput.target_splitter import SingleSplitter, OneVsAllSplitter, RandomGroupsSplitter
 
 
 class GradientBoosting(Ensemble):
@@ -141,6 +141,12 @@ class GradientBoosting(Ensemble):
             splitter = SingleSplitter()
         elif self.params['target_splitter'] == 'OneVsAll':
             splitter = OneVsAllSplitter()
+        elif self.params['target_splitter'] == 'Random3':
+            splitter = RandomGroupsSplitter(3)
+        elif self.params['target_splitter'] == 'Random6':
+            splitter = RandomGroupsSplitter(6)
+        elif self.params['target_splitter'] == 'Random10':
+            splitter = RandomGroupsSplitter(10)
         else:
             splitter = self.params['target_splitter']
 
