@@ -32,7 +32,7 @@ class GradientBoosting(Ensemble):
                  target_splitter='Single',
                  multioutput_sketch=None,
                  use_hess=True,
-                 use_wise=True
+                 use_wise=True,
 
                  
                  quantization='Quantile',
