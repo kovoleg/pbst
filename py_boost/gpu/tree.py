@@ -565,7 +565,7 @@ class DepthwiseTreeBuilder:
             if self.dim_red == True:
                 color = np.random.rand(len(output_groups) + 1, 3)
                 for i in range(len(output_groups)):
-                    plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
+                    plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i])
                 plt.show()
             
         else:
