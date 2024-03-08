@@ -9,7 +9,7 @@ import numpy as np
 from .utils import apply_values, depthwise_grow_tree, get_tree_node, set_leaf_values, calc_node_values
 from .utils import tree_prediction_leaves_typed_kernels, tree_prediction_leaves_typed_kernels_f
 from .utils import tree_prediction_values_kernel
-from sklearn.cluster import DBSCAN, KMeans
+from sklearn.cluster import DBSCAN, KMeans, OPTICS
 from sklearn.metrics import pairwise_distances
 from sklearn.manifold import TSNE 
 import matplotlib.pyplot as plt
@@ -542,6 +542,8 @@ class DepthwiseTreeBuilder:
                 groups = KMeans(n_clusters=5, random_state=0, n_init="auto").fit(emb).labels_
             elif self.grouper_type == 2:
                 groups = DBSCAN(eps=6, min_samples=5).fit(emb).labels_
+            elif self.grouper_type == 3:
+                groups = OPTICS(min_samples=5).fit(emb).labels_
             
             # print('GRAD = ', grad)
             # print(cp.shape(grad))
@@ -560,11 +562,11 @@ class DepthwiseTreeBuilder:
               j += 1
             print(output_groups)
 
-        
-            # color = np.random.rand(len(output_groups) + 1, 3)
-            # for i in range(len(output_groups)):
-            #     plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
-            # plt.show()
+            if self.dim_red == True:
+                color = np.random.rand(len(output_groups) + 1, 3)
+                for i in range(len(output_groups)):
+                    plt.scatter(tsn_emb[output_groups[i], 0], tsn_emb[output_groups[i], 1], c=color[i])
+                plt.show()
             
         else:
             output_groups = self.target_grouper()
