@@ -539,7 +539,7 @@ class DepthwiseTreeBuilder:
                 emb = cp.transpose(mtx).get()
 
             if self.grouper_type == 1:
-                groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
+                groups = KMeans(n_clusters=3, random_state=0, n_init="auto").fit(emb).labels_
             elif self.grouper_type == 2:
                 groups = DBSCAN(eps=6, min_samples=5).fit(emb).labels_
             elif self.grouper_type == 3:
