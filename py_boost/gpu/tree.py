@@ -543,7 +543,7 @@ class DepthwiseTreeBuilder:
             elif self.grouper_type == 2:
                 groups = DBSCAN(eps=6, min_samples=5).fit(emb).labels_
             elif self.grouper_type == 3:
-                groups = OPTICS(min_samples=5).fit(emb).labels_
+                groups = OPTICS(min_samples=3, cluster_method = 'dbscan').fit(emb).labels_
             
             # print('GRAD = ', grad)
             # print(cp.shape(grad))
