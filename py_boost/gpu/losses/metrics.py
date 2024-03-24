@@ -120,6 +120,15 @@ class R2Score(RMSEMetric):
     def compare(self, v0, v1):
         return v0 > v1
 
+class CrossEntropyMetric(Metric):
+    """CrossEntropy Metric for the multiclassification task"""
+    alias = 'Crossentropy'
+
+    def error(self, y_true, y_pred):
+        return -cp.log(cp.take_along_axis(y_pred, y_true[:, cp.newaxis], axis=1))
+
+    def compare(self, v0, v1):
+        return v0 < v1
 
 class RMSLEMetric(RMSEMetric):
     """RMSLE Metric for the regression/multiregression classification task"""
@@ -319,7 +328,8 @@ metric_alias = {
     # for bce
     'bce': BCEMetric(),
     'logloss': BCEMetric(),
-
+    'crossentropy': CrossEntropyMetric(),
+    
     'precision': Precision(),
     'recall': Recall(),
     'f1_score': F1Score(),
