@@ -9,7 +9,7 @@ import numpy as np
 from .utils import apply_values, depthwise_grow_tree, get_tree_node, set_leaf_values, calc_node_values
 from .utils import tree_prediction_leaves_typed_kernels, tree_prediction_leaves_typed_kernels_f
 from .utils import tree_prediction_values_kernel
-from sklearn.cluster import DBSCAN, KMeans, OPTICS
+from sklearn.cluster import DBSCAN, KMeans, OPTICS, AffinityPropagation, MeanShift
 from sklearn.metrics import pairwise_distances
 from sklearn.manifold import TSNE 
 import matplotlib.pyplot as plt
@@ -538,13 +538,17 @@ class DepthwiseTreeBuilder:
             else:
                 emb = cp.transpose(mtx).get()
 
-            if self.grouper_type == 1:
+            if self.grouper_type == 'kmeans':
                 groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
-            elif self.grouper_type == 2:
+            elif self.grouper_type == 'dbscan':
                 groups = DBSCAN(eps=6, min_samples=5).fit(emb).labels_
-            elif self.grouper_type == 3:
+            elif self.grouper_type == 'optics:
                 groups = OPTICS(min_samples=3, cluster_method = 'dbscan').fit(emb).labels_
-            
+            elif self.grouper_type == 'mean_shift:
+                groups = MeanShift().fit(emb).labels_
+            elif self.grouper_type == 'affin:
+                groups = AffinityPropagation(random_state=5).fit(emb).labels_
+        
             # print('GRAD = ', grad)
             # print(cp.shape(grad))
             # print('TSNE = ', tsn_emb)
