@@ -539,11 +539,11 @@ class DepthwiseTreeBuilder:
                 emb = cp.transpose(mtx).get()
 
             if self.grouper_type == 'kmeans':
-                groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
+                groups = KMeans(n_clusters=5, random_state=0, n_init="auto").fit(emb).labels_
             elif self.grouper_type == 'dbscan':
                 groups = DBSCAN(eps=6, min_samples=5).fit(emb).labels_
             elif self.grouper_type == 'optics':
-                groups = OPTICS(min_samples=7, cluster_method = 'dbscan').fit(emb).labels_
+                groups = OPTICS(min_samples=3, cluster_method = 'dbscan').fit(emb).labels_
             elif self.grouper_type == 'mean_shift':
                 groups = MeanShift().fit(emb).labels_
             elif self.grouper_type == 'affin':
