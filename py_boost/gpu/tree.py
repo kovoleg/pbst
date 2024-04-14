@@ -559,7 +559,7 @@ class DepthwiseTreeBuilder:
             output_groups = []
             for i in range(len(np.unique(groups))):
               output_groups.append([])
-                
+            
             j = 0
             for i in groups:
               output_groups[i].append(j) 
@@ -576,6 +576,7 @@ class DepthwiseTreeBuilder:
             
         else:
             output_groups = self.target_grouper()
+            print(output_groups)
             
         if sample_weight is not None:
             grad = grad * sample_weight
