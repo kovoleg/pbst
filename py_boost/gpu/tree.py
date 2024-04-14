@@ -533,8 +533,12 @@ class DepthwiseTreeBuilder:
             else:
                 mtx = grad
 
-            if self.dim_red == True:
+            if self.dim_red == 2:
                 emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
+            elif self.dim_red == 20:
+                emb = TSNE(n_components=20, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())      
+            elif self.dim_red == 100:
+                emb = TSNE(n_components=100, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())   
             else:
                 emb = cp.transpose(mtx).get()
 
@@ -565,24 +569,25 @@ class DepthwiseTreeBuilder:
               output_groups[i].append(j) 
               j += 1
                 
-            real_output = []
-            for i in range(len(max(output_groups, key = lambda x: len(x)))):
-                cur_group = []
-                for j in range(len(output_groups)):
-                    if i < len(output_groups[j]):
-                        cur_group.append(output_groups[j][i])
-                real_output.append(cur_group)
+            # real_output = []
+            # for i in range(len(max(output_groups, key = lambda x: len(x)))):
+            #     cur_group = []
+            #     for j in range(len(output_groups)):
+            #         if i < len(output_groups[j]):
+            #             cur_group.append(output_groups[j][i])
+            #     real_output.append(cur_group)
                 
-            output_groups = real_output
-            if self.dim_red == True:
-                np.random.seed(seed=7)
-                color = np.random.rand(len(output_groups) + 1, 3)
-                for i in range(len(output_groups)):
-                    plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
-                plt.show()
-            else:
-                print(output_groups)
+            # output_groups = real_output
             
+            # if self.dim_red == True:
+            #     np.random.seed(seed=7)
+            #     color = np.random.rand(len(output_groups) + 1, 3)
+            #     for i in range(len(output_groups)):
+            #         plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
+            #     plt.show()
+            # else:
+            #     print(output_groups)
+            print(output_groups)
         else:
             output_groups = self.target_grouper()
             print(output_groups)
