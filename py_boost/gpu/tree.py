@@ -12,6 +12,7 @@ from .utils import tree_prediction_values_kernel
 from sklearn.cluster import DBSCAN, KMeans, OPTICS, AffinityPropagation, MeanShift
 from sklearn.metrics import pairwise_distances
 from sklearn.manifold import TSNE 
+from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import numpy as np
 class Tree:
@@ -534,11 +535,10 @@ class DepthwiseTreeBuilder:
                 mtx = grad
 
             if self.dim_red == 2:
-                emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
-            elif self.dim_red == 20:
-                emb = TSNE(n_components=20, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())      
+                # emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
+                emb = PCA().fit_transform(cp.transpose(mtx).get())         
             elif self.dim_red == 100:
-                emb = TSNE(n_components=100, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())   
+                emb = PCA(n_components=100).fit_transform(cp.transpose(mtx).get())  
             else:
                 emb = cp.transpose(mtx).get()
 
