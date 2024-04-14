@@ -566,7 +566,7 @@ class DepthwiseTreeBuilder:
               j += 1
                 
             real_output = []
-            for i in range(max(output_groups, key = lambda x: len(x))):
+            for i in range(len(max(output_groups, key = lambda x: len(x)))):
                 cur_group = []
                 for j in range(len(output_groups)):
                     if i < len(output_groups[j]):
