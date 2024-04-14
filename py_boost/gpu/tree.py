@@ -535,10 +535,10 @@ class DepthwiseTreeBuilder:
                 mtx = grad
 
             if self.dim_red == 2:
-                # emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
-                emb = PCA().fit_transform(cp.transpose(mtx).get())         
+                emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
+                # emb = PCA().fit_transform(cp.transpose(mtx).get())         
             elif self.dim_red == 100:
-                emb = PCA(n_components=100).fit_transform(cp.transpose(mtx).get())  
+                # emb = PCA(n_components=100).fit_transform(cp.transpose(mtx).get())  
             else:
                 emb = cp.transpose(mtx).get()
 
@@ -578,16 +578,15 @@ class DepthwiseTreeBuilder:
             #     real_output.append(cur_group)
                 
             # output_groups = real_output
-            
-            # if self.dim_red == True:
-            #     np.random.seed(seed=7)
-            #     color = np.random.rand(len(output_groups) + 1, 3)
-            #     for i in range(len(output_groups)):
-            #         plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
-            #     plt.show()
-            # else:
-            #     print(output_groups)
             print(output_groups)
+            if self.dim_red == True:
+                np.random.seed(seed=7)
+                color = np.random.rand(len(output_groups) + 1, 3)
+                for i in range(len(output_groups)):
+                    plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
+                plt.show()
+            else:
+                print(output_groups)
         else:
             output_groups = self.target_grouper()
             print(output_groups)
