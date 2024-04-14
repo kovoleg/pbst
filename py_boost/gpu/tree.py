@@ -564,7 +564,16 @@ class DepthwiseTreeBuilder:
             for i in groups:
               output_groups[i].append(j) 
               j += 1
-
+                
+            real_output = []
+            for i in range(max(output_groups, key = lambda x: len(x))):
+                cur_group = []
+                for j in range(len(output_groups)):
+                    if i < len(output_groups[j]):
+                        cur_group.append(output_groups[j][i])
+                real_output.append(cur_group)
+                
+            output_groups = real_output
             if self.dim_red == True:
                 np.random.seed(seed=7)
                 color = np.random.rand(len(output_groups) + 1, 3)
