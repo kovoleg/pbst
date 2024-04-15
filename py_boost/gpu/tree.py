@@ -536,15 +536,18 @@ class DepthwiseTreeBuilder:
                 
             # print(cp.shape(mtx))
             # print(cp.shape(cp.transpose(mtx)))
-            if self.dim_red == True:
-                emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
+            if self.dim_red != None:
+                emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=self.dim_red).fit_transform(cp.transpose(mtx).get())
                 # emb = PCA(n_components = 0.8).fit_transform(cp.transpose(mtx).get())
                 # print(emb.shape)
+
             else:
                 emb = cp.transpose(mtx).get()
 
-            if self.grouper_type == 'kmeans':
+            if self.grouper_type == 'kmeans15':
                 groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
+            elif self.grouper_type == 'kmeans7':
+                groups = KMeans(n_clusters=7, random_state=0, n_init="auto").fit(emb).labels_
             elif self.grouper_type == 'dbscan':
                 groups = DBSCAN(eps=6, min_samples=5).fit(emb).labels_
             elif self.grouper_type == 'optics':
@@ -570,15 +573,15 @@ class DepthwiseTreeBuilder:
               output_groups[i].append(j) 
               j += 1
                 
-            real_output = []
-            for i in range(len(max(output_groups, key = lambda x: len(x)))):
-                cur_group = []
-                for j in range(len(output_groups)):
-                    if i < len(output_groups[j]):
-                        cur_group.append(output_groups[j][i])
-                real_output.append(cur_group)
+            # real_output = []
+            # for i in range(len(max(output_groups, key = lambda x: len(x)))):
+            #     cur_group = []
+            #     for j in range(len(output_groups)):
+            #         if i < len(output_groups[j]):
+            #             cur_group.append(output_groups[j][i])
+            #     real_output.append(cur_group)
                 
-            output_groups = real_output
+            # output_groups = real_output
             
             print(output_groups)
             # if self.dim_red == True:
