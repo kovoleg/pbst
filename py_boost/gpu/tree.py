@@ -536,7 +536,8 @@ class DepthwiseTreeBuilder:
 
             if self.dim_red == True:
                 # emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=50).fit_transform(cp.transpose(mtx).get())
-                emb = PCA(n_components='mle').fit_transform(cp.transpose(mtx).get())         
+                emb = PCA(n_components='mle').fit_transform(cp.transpose(mtx).get())
+                print(emb.shape)
             else:
                 emb = cp.transpose(mtx).get()
 
