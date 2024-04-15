@@ -537,8 +537,8 @@ class DepthwiseTreeBuilder:
             # print(cp.shape(mtx))
             # print(cp.shape(cp.transpose(mtx)))
             if self.dim_red == True:
-                # emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=50).fit_transform(cp.transpose(mtx).get())
-                emb = PCA().fit_transform(cp.transpose(mtx).get())
+                emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=50).fit_transform(cp.transpose(mtx).get())
+                # emb = PCA().fit_transform(cp.transpose(mtx).get())
                 # print(emb.shape)
             else:
                 emb = cp.transpose(mtx).get()
@@ -581,12 +581,12 @@ class DepthwiseTreeBuilder:
             # output_groups = real_output
             
             print(output_groups)
-            # if self.dim_red == True:
-            #     np.random.seed(seed=7)
-            #     color = np.random.rand(len(output_groups) + 1, 3)
-            #     for i in range(len(output_groups)):
-            #         plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
-            #     plt.show()
+            if self.dim_red == True:
+                np.random.seed(seed=7)
+                color = np.random.rand(len(output_groups) + 1, 3)
+                for i in range(len(output_groups)):
+                    plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
+                plt.show()
         else:
             output_groups = self.target_grouper()
             print(output_groups)
