@@ -537,9 +537,9 @@ class DepthwiseTreeBuilder:
             # print(cp.shape(mtx))
             # print(cp.shape(cp.transpose(mtx)))
             if self.dim_red == True:
-                # emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=50).fit_transform(cp.transpose(mtx).get())
-                emb = PCA(n_components = 0.8).fit_transform(cp.transpose(mtx).get())
-                print(emb.shape)
+                emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=3).fit_transform(cp.transpose(mtx).get())
+                # emb = PCA(n_components = 0.8).fit_transform(cp.transpose(mtx).get())
+                # print(emb.shape)
             else:
                 emb = cp.transpose(mtx).get()
 
@@ -570,15 +570,15 @@ class DepthwiseTreeBuilder:
               output_groups[i].append(j) 
               j += 1
                 
-            # real_output = []
-            # for i in range(len(max(output_groups, key = lambda x: len(x)))):
-            #     cur_group = []
-            #     for j in range(len(output_groups)):
-            #         if i < len(output_groups[j]):
-            #             cur_group.append(output_groups[j][i])
-            #     real_output.append(cur_group)
+            real_output = []
+            for i in range(len(max(output_groups, key = lambda x: len(x)))):
+                cur_group = []
+                for j in range(len(output_groups)):
+                    if i < len(output_groups[j]):
+                        cur_group.append(output_groups[j][i])
+                real_output.append(cur_group)
                 
-            # output_groups = real_output
+            output_groups = real_output
             
             print(output_groups)
             # if self.dim_red == True:
