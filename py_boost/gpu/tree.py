@@ -527,9 +527,6 @@ class DepthwiseTreeBuilder:
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
             
-        # elif prev_preds != None:
-        #     output_groups = prev_preds
-            
         elif self.use_wise == True: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             
             if self.hess_mode == True:
@@ -546,9 +543,8 @@ class DepthwiseTreeBuilder:
 
             else:
                 emb = cp.transpose(mtx).get()
-            if self.grouper_type == 'precomp':
-                
-            elif self.grouper_type == 'kmeans15':
+
+            if self.grouper_type == 'kmeans15':
                 groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
             elif self.grouper_type == 'kmeans7':
                 groups = KMeans(n_clusters=7, random_state=0, n_init="auto").fit(emb).labels_
@@ -598,7 +594,6 @@ class DepthwiseTreeBuilder:
             output_groups = self.target_grouper()
             print(output_groups)
             
-        # prev_preds = output_groups
         if sample_weight is not None:
             grad = grad * sample_weight
             hess = hess * sample_weight
