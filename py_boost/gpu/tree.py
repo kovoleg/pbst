@@ -496,7 +496,7 @@ class DepthwiseTreeBuilder:
         self.multioutput_sketch = multioutput_sketch
         self.gd_steps = gd_steps
 
-    def build_tree(self, X, grad, hess, sample_weight=None, grad_fn=None, *val_arrays):
+    def build_tree(self, X, prev_preds, grad, hess, sample_weight=None, grad_fn=None, *val_arrays):
         """Build tree and return nodes/values predictions for train and validation sets
 
         Args:
@@ -526,6 +526,8 @@ class DepthwiseTreeBuilder:
 
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
+        elif prev_preds != None:
+            output_groups = prev_preds
             
         elif self.use_wise == True: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             
@@ -543,8 +545,9 @@ class DepthwiseTreeBuilder:
 
             else:
                 emb = cp.transpose(mtx).get()
-
-            if self.grouper_type == 'kmeans15':
+            if self.grouper_type == 'precomp':
+                
+            elif self.grouper_type == 'kmeans15':
                 groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
             elif self.grouper_type == 'kmeans7':
                 groups = KMeans(n_clusters=7, random_state=0, n_init="auto").fit(emb).labels_
@@ -594,6 +597,7 @@ class DepthwiseTreeBuilder:
             output_groups = self.target_grouper()
             print(output_groups)
             
+        prev_preds = output_groups
         if sample_weight is not None:
             grad = grad * sample_weight
             hess = hess * sample_weight
@@ -656,4 +660,4 @@ class DepthwiseTreeBuilder:
         val_preds = [apply_values(x, group_index, values) for x in val_leaves]
         tree.set_node_values(values.get(), group_index.get())
 
-        return tree, leaves, pred, val_leaves, val_preds
+        return tree, leaves, pred, val_leaves, val_preds, prev_preds
