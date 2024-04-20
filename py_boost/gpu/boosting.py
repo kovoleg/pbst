@@ -215,7 +215,7 @@ class GradientBoosting(Ensemble):
             if i % 50 != 0:
                 prev_preds = None
                 
-            tree, leaves, preds, val_leaves, val_preds, prev_preds = \
+            tree, leaves, preds, val_leaves, val_preds = \
                 builder.build_tree(train['features_gpu'],
                                    prev_preds,
                                    train['grad'],
