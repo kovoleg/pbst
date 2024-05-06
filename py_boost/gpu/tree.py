@@ -526,9 +526,9 @@ class DepthwiseTreeBuilder:
 
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
-        elif type(self.target_grouper) == int and iter_num % self.target_grouper == 0: 
+        elif type(self.use_wise) == int and iter_num % self.target_grouper == 0: 
             output_groups = prev_groups
-        elif self.use_wise == True: # ---------------------------------------------------------------------------------------------------------------------------------------------------
+        elif self.use_wise != False: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             
             if self.hess_mode == True:
                 mtx = hess
@@ -591,7 +591,7 @@ class DepthwiseTreeBuilder:
             #     for i in range(len(output_groups)):
             #         plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
             #     plt.show()
-        else:
+        elif:
             output_groups = self.target_grouper()
             print(output_groups)
             
