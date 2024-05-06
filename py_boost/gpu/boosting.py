@@ -220,7 +220,8 @@ class GradientBoosting(Ensemble):
                                    train['sample_weight'],
                                    lambda x: self.loss(train['target'], train['ensemble'] + x),
                                    *valid['features_gpu'],
-                                   prev_groups)
+                                   prev_groups,
+                                   build_info['num_iter'])
 
             # update ensemble
             train['ensemble'] += preds
