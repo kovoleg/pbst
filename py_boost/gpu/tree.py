@@ -591,7 +591,7 @@ class DepthwiseTreeBuilder:
             #     for i in range(len(output_groups)):
             #         plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
             #     plt.show()
-        elif:
+        else:
             output_groups = self.target_grouper()
             print(output_groups)
             
