@@ -213,12 +213,11 @@ class GradientBoosting(Ensemble):
             # print(type(train['hess']))
             self.callbacks.before_iteration(build_info)
 
-            tree, leaves, preds, val_leaves, val_preds, prev_groups = \
+            tree, leaves, preds, val_leaves, val_preds = \
                 builder.build_tree(train['features_gpu'],
                                    train['grad'],
                                    train['hess'],
                                    train['sample_weight'],
-                                   prev_groups,
                                    lambda x: self.loss(train['target'], train['ensemble'] + x),
                                    *valid['features_gpu'])
 
