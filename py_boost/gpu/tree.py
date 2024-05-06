@@ -657,4 +657,4 @@ class DepthwiseTreeBuilder:
         val_preds = [apply_values(x, group_index, values) for x in val_leaves]
         tree.set_node_values(values.get(), group_index.get())
 
-        return tree, leaves, pred, val_leaves, val_preds, output_proups
+        return tree, leaves, pred, val_leaves, val_preds, output_groups
