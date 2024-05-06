@@ -496,7 +496,7 @@ class DepthwiseTreeBuilder:
         self.multioutput_sketch = multioutput_sketch
         self.gd_steps = gd_steps
 
-    def build_tree(self, X, grad, hess, sample_weight=None, grad_fn=None, *val_arrays, prev_groups, iter_num):
+    def build_tree(self, X, grad, hess, sample_weight=None, grad_fn=None, *val_arrays, prev_groups = None, iter_num = None):
         """Build tree and return nodes/values predictions for train and validation sets
 
         Args:
