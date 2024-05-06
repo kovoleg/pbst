@@ -526,7 +526,8 @@ class DepthwiseTreeBuilder:
 
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
-            
+        elif type(self.target_grouper) == int and iter_num % self.target_grouper == 0: 
+            output_groups = prev_groups
         elif self.use_wise == True: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             
             if self.hess_mode == True:
