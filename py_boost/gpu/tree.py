@@ -584,7 +584,6 @@ class DepthwiseTreeBuilder:
                 
             # output_groups = real_output
             
-            print(output_groups)
             # if self.dim_red == True:
             #     np.random.seed(seed=7)
             #     color = np.random.rand(len(output_groups) + 1, 3)
@@ -593,7 +592,7 @@ class DepthwiseTreeBuilder:
             #     plt.show()
         else:
             output_groups = self.target_grouper()
-            print(output_groups)
+        print('output_groups =', output_groups)
             
         if sample_weight is not None:
             grad = grad * sample_weight
