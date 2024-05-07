@@ -523,11 +523,10 @@ class DepthwiseTreeBuilder:
             row_indexer = cp.arange(X.shape[0], dtype=cp.uint64)
         else:
             row_indexer = self.subsampler()
-        print('iter_Num=', iter_num)
+            
         if self.target_grouper is None:
             output_groups = [cp.arange(grad.shape[1], dtype=cp.uint64)]
         elif type(self.use_wise) == int and iter_num % self.use_wise != 0: 
-            print('iter_Num2=', iter_num % self.use_wise)
             output_groups = prev_groups
         elif self.use_wise != False: # ---------------------------------------------------------------------------------------------------------------------------------------------------
             
@@ -593,7 +592,7 @@ class DepthwiseTreeBuilder:
             #     plt.show()
         else:
             output_groups = self.target_grouper()
-        print('output_groups =', output_groups)
+        # print('output_groups =', output_groups)
             
         if sample_weight is not None:
             grad = grad * sample_weight
