@@ -593,7 +593,7 @@ class DepthwiseTreeBuilder:
         else:
             output_groups = self.target_grouper()
         # print('output_groups =', output_groups)
-            
+        print('output_groups =', output_groups)    
         if sample_weight is not None:
             grad = grad * sample_weight
             hess = hess * sample_weight
