@@ -9,10 +9,10 @@ import numpy as np
 from .utils import apply_values, depthwise_grow_tree, get_tree_node, set_leaf_values, calc_node_values
 from .utils import tree_prediction_leaves_typed_kernels, tree_prediction_leaves_typed_kernels_f
 from .utils import tree_prediction_values_kernel
-from sklearn.cluster import DBSCAN, KMeans, OPTICS, AffinityPropagation, MeanShift, AgglomerativeClustering
-from sklearn.metrics import pairwise_distances
-from sklearn.manifold import TSNE 
-from sklearn.decomposition import PCA
+# from sklearn.cluster import DBSCAN, KMeans, OPTICS, AffinityPropagation, MeanShift, AgglomerativeClustering
+# from sklearn.metrics import pairwise_distances
+# from sklearn.manifold import TSNE 
+# from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import numpy as np
 
