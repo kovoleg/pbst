@@ -557,9 +557,9 @@ class DepthwiseTreeBuilder:
             elif self.grouper_type == 'aglom1':
                 groups = AgglomerativeClustering(n_clusters=10, metric='euclidean').fit(emb).labels_    
             elif self.grouper_type == 'aglom2':
-                groups = AgglomerativeClustering(n_clusters=10, metric='manhattan').fit(emb).labels_   
+                groups = AgglomerativeClustering(n_clusters=10, metric='manhattan', linkage = 'average').fit(emb).labels_   
             elif self.grouper_type == 'aglom3':
-                groups = AgglomerativeClustering(n_clusters=10, metric='cosine').fit(emb).labels_   
+                groups = AgglomerativeClustering(n_clusters=10, metric='cosine', linkage = 'average').fit(emb).labels_   
 
                 
             # print(cp.shape(grad))
