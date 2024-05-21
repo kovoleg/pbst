@@ -7,7 +7,6 @@ source ./py_boost_venv/bin/activate
 pip install -U pip
 pip install -U poetry
 pip install -U cupy-cuda110
-pip install -U umap-learn
 
 poetry lock
 poetry install
