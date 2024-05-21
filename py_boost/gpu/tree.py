@@ -555,15 +555,12 @@ class DepthwiseTreeBuilder:
             elif self.grouper_type == 'affin':
                 groups = AffinityPropagation(random_state=5).fit(emb).labels_
             elif self.grouper_type == 'aglom1':
-                groups = AgglomerativeClustering(n_clusters=10, metric='euclidean')    
+                groups = AgglomerativeClustering(n_clusters=10, metric='euclidean').fit(emb).labels_    
             elif self.grouper_type == 'aglom2':
-                groups = AgglomerativeClustering(n_clusters=10, metric='euclidean')   
+                groups = AgglomerativeClustering(n_clusters=10, metric='manhattan').fit(emb).labels_   
             elif self.grouper_type == 'aglom3':
-                groups = AgglomerativeClustering(n_clusters=10, metric='l1')   
-            elif self.grouper_type == 'aglom4':
-                groups = AgglomerativeClustering(n_clusters=10, metric='l2')   
-            elif self.grouper_type == 'aglom5':
-                groups = AgglomerativeClustering(n_clusters=10, metric='manhattan')   
+                groups = AgglomerativeClustering(n_clusters=10, metric='cosine').fit(emb).labels_   
+
                 
             # print(cp.shape(grad))
             # print('TSNE = ', tsn_emb)
