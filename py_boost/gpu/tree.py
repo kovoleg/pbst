@@ -15,7 +15,7 @@ from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import numpy as np
-import umap
+# import umap
 class Tree:
     """This class initializes an empty tree structure, implements methods to set tree values and single tree inference.
     The instance of this object represents the actual boosting step, but not the single tree!
@@ -542,8 +542,8 @@ class DepthwiseTreeBuilder:
                 emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=self.dim_red, n_jobs = -1).fit_transform(cp.transpose(mtx).get())
             elif self.dim_red == 'pca':
                 emb = PCA(n_components = 0.8).fit_transform(cp.transpose(mtx).get())
-            elif self.dim_red == 'umap':
-                emb = umap.UMAP(n_neighbors=10, n_components=2).fit_transform(cp.transpose(mtx).get())
+            # elif self.dim_red == 'umap':
+            #     emb = umap.UMAP(n_neighbors=10, n_components=2).fit_transform(cp.transpose(mtx).get())
             else:
                 emb = cp.transpose(mtx).get()
 
