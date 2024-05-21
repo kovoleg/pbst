@@ -586,12 +586,12 @@ class DepthwiseTreeBuilder:
                 
             # output_groups = real_output
             
-            if self.dim_red == True and iter_num % self.use_wise == 0:
-                np.random.seed(seed=7)
-                color = np.random.rand(len(output_groups) + 1, 3)
-                for i in range(len(output_groups)):
-                    plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
-                plt.show()
+            # if self.dim_red == True and iter_num % self.use_wise == 0:
+            #     np.random.seed(seed=7)
+            #     color = np.random.rand(len(output_groups) + 1, 3)
+            #     for i in range(len(output_groups)):
+            #         plt.scatter(emb[output_groups[i], 0], emb[output_groups[i], 1], c=color[i].reshape(1,-1))
+            #     plt.show()
         
         else:
             output_groups = self.target_grouper()
