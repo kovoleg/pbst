@@ -589,7 +589,7 @@ class DepthwiseTreeBuilder:
                 
             # output_groups = real_output
             
-            if self.dim_red == True:
+            if self.dim_red == True and iter_num % self.use_wise == 0:
                 np.random.seed(seed=7)
                 color = np.random.rand(len(output_groups) + 1, 3)
                 for i in range(len(output_groups)):
