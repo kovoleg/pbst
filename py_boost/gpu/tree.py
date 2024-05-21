@@ -15,7 +15,7 @@ from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import numpy as np
-# import umap
+import umap
 class Tree:
     """This class initializes an empty tree structure, implements methods to set tree values and single tree inference.
     The instance of this object represents the actual boosting step, but not the single tree!
