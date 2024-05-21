@@ -538,31 +538,29 @@ class DepthwiseTreeBuilder:
                 
             # print(cp.shape(mtx))
             # print(cp.shape(cp.transpose(mtx)))
-            if self.dim_red == 'tsne':
-                emb = TSNE(n_components=2, learning_rate='auto', init='random', perplexity=self.dim_red, n_jobs = -1).fit_transform(cp.transpose(mtx).get())
-            elif self.dim_red == 'pca':
-                emb = PCA(n_components = 0.8).fit_transform(cp.transpose(mtx).get())
-            # elif self.dim_red == 'umap':
-            #     emb = umap.UMAP(n_neighbors=10, n_components=2).fit_transform(cp.transpose(mtx).get())
+            if self.dim_red != None:
+                emb = self.dim_red.fit_transform(cp.transpose(mtx).get()) 
             else:
                 emb = cp.transpose(mtx).get()
 
-            if self.grouper_type == 'kmeans10':
-                groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
-            elif self.grouper_type == 'kmeans7':
-                groups = KMeans(n_clusters=7, random_state=0, n_init="auto").fit(emb).labels_
-            elif self.grouper_type == 'optics':
-                groups = OPTICS(min_samples=3, cluster_method = 'dbscan').fit(emb).labels_
-            elif self.grouper_type == 'mean_shift':
-                groups = MeanShift().fit(emb).labels_
-            elif self.grouper_type == 'affin':
-                groups = AffinityPropagation(random_state=5).fit(emb).labels_
-            elif self.grouper_type == 'aglom1':
-                groups = AgglomerativeClustering(n_clusters=10, metric='euclidean').fit(emb).labels_    
-            elif self.grouper_type == 'aglom2':
-                groups = AgglomerativeClustering(n_clusters=10, metric='manhattan', linkage = 'average').fit(emb).labels_   
-            elif self.grouper_type == 'aglom3':
-                groups = AgglomerativeClustering(n_clusters=10, metric='cosine', linkage = 'average').fit(emb).labels_   
+            groups = self.grouper_type.fit(emb).labels_
+            
+            # if self.grouper_type == 'kmeans10':
+            #     groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
+            # elif self.grouper_type == 'kmeans7':
+            #     groups = KMeans(n_clusters=7, random_state=0, n_init="auto").fit(emb).labels_
+            # elif self.grouper_type == 'optics':
+            #     groups = OPTICS(min_samples=3, cluster_method = 'dbscan').fit(emb).labels_
+            # elif self.grouper_type == 'mean_shift':
+            #     groups = MeanShift().fit(emb).labels_
+            # elif self.grouper_type == 'affin':
+            #     groups = AffinityPropagation(random_state=5).fit(emb).labels_
+            # elif self.grouper_type == 'aglom1':
+            #     groups = AgglomerativeClustering(n_clusters=10, metric='euclidean').fit(emb).labels_    
+            # elif self.grouper_type == 'aglom2':
+            #     groups = AgglomerativeClustering(n_clusters=10, metric='manhattan', linkage = 'average').fit(emb).labels_   
+            # elif self.grouper_type == 'aglom3':
+            #     groups = AgglomerativeClustering(n_clusters=10, metric='cosine', linkage = 'average').fit(emb).labels_   
 
                 
             # print(cp.shape(grad))
@@ -598,6 +596,7 @@ class DepthwiseTreeBuilder:
         
         else:
             output_groups = self.target_grouper()
+            
         print('output_groups =', output_groups)    
         
         if sample_weight is not None:
