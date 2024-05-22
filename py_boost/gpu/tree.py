@@ -545,28 +545,6 @@ class DepthwiseTreeBuilder:
 
             groups = self.grouper_type.fit(emb).labels_
             
-            # if self.grouper_type == 'kmeans10':
-            #     groups = KMeans(n_clusters=10, random_state=0, n_init="auto").fit(emb).labels_
-            # elif self.grouper_type == 'kmeans7':
-            #     groups = KMeans(n_clusters=7, random_state=0, n_init="auto").fit(emb).labels_
-            # elif self.grouper_type == 'optics':
-            #     groups = OPTICS(min_samples=3, cluster_method = 'dbscan').fit(emb).labels_
-            # elif self.grouper_type == 'mean_shift':
-            #     groups = MeanShift().fit(emb).labels_
-            # elif self.grouper_type == 'affin':
-            #     groups = AffinityPropagation(random_state=5).fit(emb).labels_
-            # elif self.grouper_type == 'aglom1':
-            #     groups = AgglomerativeClustering(n_clusters=10, metric='euclidean').fit(emb).labels_    
-            # elif self.grouper_type == 'aglom2':
-            #     groups = AgglomerativeClustering(n_clusters=10, metric='manhattan', linkage = 'average').fit(emb).labels_   
-            # elif self.grouper_type == 'aglom3':
-            #     groups = AgglomerativeClustering(n_clusters=10, metric='cosine', linkage = 'average').fit(emb).labels_   
-
-                
-            # print(cp.shape(grad))
-            # print('TSNE = ', tsn_emb)
-            # print(np.shape(tsn_emb))
-            # print(pairwise_distances(cp.transpose(grad).get()))
 
             output_groups = []
             for i in range(len(np.unique(groups))):
@@ -577,15 +555,15 @@ class DepthwiseTreeBuilder:
               output_groups[i].append(j) 
               j += 1
                 
-            # real_output = []
-            # for i in range(len(max(output_groups, key = lambda x: len(x)))):
-            #     cur_group = []
-            #     for j in range(len(output_groups)):
-            #         if i < len(output_groups[j]):
-            #             cur_group.append(output_groups[j][i])
-            #     real_output.append(cur_group)
+            real_output = []
+            for i in range(len(max(output_groups, key = lambda x: len(x)))):
+                cur_group = []
+                for j in range(len(output_groups)):
+                    if i < len(output_groups[j]):
+                        cur_group.append(output_groups[j][i])
+                real_output.append(cur_group)
                 
-            # output_groups = real_output
+            output_groups = real_output
             
             # if self.dim_red != None and iter_num % self.use_wise == 0:
             #     np.random.seed(seed=7)
