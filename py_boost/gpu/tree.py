@@ -555,15 +555,15 @@ class DepthwiseTreeBuilder:
               output_groups[i].append(j) 
               j += 1
                 
-            real_output = []
-            for i in range(len(max(output_groups, key = lambda x: len(x)))):
-                cur_group = []
-                for j in range(len(output_groups)):
-                    if i < len(output_groups[j]):
-                        cur_group.append(output_groups[j][i])
-                real_output.append(cur_group)
+            # real_output = []
+            # for i in range(len(max(output_groups, key = lambda x: len(x)))):
+            #     cur_group = []
+            #     for j in range(len(output_groups)):
+            #         if i < len(output_groups[j]):
+            #             cur_group.append(output_groups[j][i])
+            #     real_output.append(cur_group)
                 
-            output_groups = real_output
+            # output_groups = real_output
             
             # if self.dim_red != None and iter_num % self.use_wise == 0:
             #     np.random.seed(seed=7)
